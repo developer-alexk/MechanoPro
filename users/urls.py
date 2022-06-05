@@ -9,3 +9,5 @@ urlpatterns = [
     path('engineer/home/',engineer_home, name='engineer_home'),
     path('logout/',logout_view, name='logout_view'),
 ]
+
+admin.site.site_header == "JUA KALI"
