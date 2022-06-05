@@ -10,4 +10,4 @@ urlpatterns = [
     path('logout/',logout_view, name='logout_view'),
 ]
 
-admin.site.site_header == "JUA KALI"
+admin.site.site_header == "JUA KALI Admin"
