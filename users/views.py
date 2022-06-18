@@ -10,6 +10,7 @@ from config.sms import send_otp_to_validate_phone
 from likes.models import Likes
 from otp.models import Otps
 from otp.views import random_number_generator
+from ratings.models import Rattings, calculate_rating
 from users.forms import UserUpdateForm
 
 from users.models import Account, Company
@@ -86,12 +87,74 @@ def index(request):
 
 @login_required
 def customer_home(request):
+    campanies = Company.objects.all()
+    
+
+
+    
     engeneers = Company.objects.all().order_by('-id')
     data = {
-        "engeneers" : engeneers 
+        "engeneers" : engeneers,
     }
 
     return render(request, 'customer/home.html',data)
+
+def company_details(request,company_id):
+    if request.method == "POST":
+        rating = request.POST.get('rate')
+        comment = request.POST.get('comment')
+        print(rating)
+        print(comment)
+        user = Account.objects.get(id=request.user.id)
+        company = Company.objects.get(id=company_id)
+
+        #Check if user has already rated the company and decline the request if they have
+        if Rattings.objects.filter(user=user,company=company):
+            cal_rate = calculate_rating(company_id=company_id)
+            Company.objects.filter(id=company_id).update(rating=cal_rate)
+            print("Already Rated")
+            messages.error(request, 'You have already rated this company')
+            return redirect('users:company_details',company_id=company_id)
+
+        try:
+            Rattings(
+            rating = rating,
+            comment = comment,
+            user = user,
+            company = company
+            ).save()
+            print("Saved")
+
+            messages.error(request, 'Thanks For Rating Us')
+
+            cal_rate = calculate_rating(company_id=company_id)
+            Company.objects.filter(id=company_id).update(rating=cal_rate)
+
+
+        except:
+            cal_rate = calculate_rating(company_id=company_id)
+            Company.objects.filter(id=company_id).update(rating=cal_rate)
+            print("Failed")
+
+
+    company = Company.objects.get(id=company_id)
+    ratings = Rattings.objects.all().filter(company=company)
+
+
+
+    #Print number of ratings
+    print(len(ratings))
+
+    #Calculate average rating
+    cal_rate = calculate_rating(company_id=company_id)
+    print("Rating", cal_rate)
+
+    data = {
+        "company" : company,
+        "ratings" : ratings,
+        "cal_rate" : cal_rate
+    }
+    return render(request,'customer/company_details.html',data)
 
 @login_required
 def engeneer_home(request):

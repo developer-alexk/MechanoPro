@@ -1,0 +1,297 @@
+{% extends "layouts/base.html" %} {% load static %} {% block content %}
+<body>
+  {% include 'layouts/navbar.html' %}
+  <div class="container">
+    <div class="row">
+        <!--Error messages from backend-->
+        {% if messages %} {% for message in messages %}
+        <!--Toggle allert message and dismis in seconds-->
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+          {{message.message}}
+        </div>
+        {% endfor %} {% endif %}
+      <div class="col-md-3" style="padding: 15px">
+        <div>
+          <img
+            src="https://mdbcdn.b-cdn.net/img/new/standard/nature/182.webp"
+            class="card-img-top"
+            alt="Sunset Over the Sea"
+          />
+          <div class="d-flex flex-row" style="padding-left: 5px">
+            <p>
+              <b>{{ company.name }}</b>
+            </p>
+          </div>
+          <div class="d-flex flex-row" style="padding-left: 5px">
+            {% if cal_rate == 0.0 %}
+            <div class="text-danger mb-1 me-2">
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+            </div>
+            {% elif cal_rate <= 1.0 %}
+            <div class="text-danger mb-1 me-2">
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+            </div>
+            {% elif cal_rate <= 2.0 %}
+            <div class="text-danger mb-1 me-2">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+            </div>
+            {% elif cal_rate <= 3.0 %}
+            <div class="text-danger mb-1 me-2">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+            </div>
+            {% elif cal_rate <= 4.0 %}
+            <div class="text-danger mb-1 me-2">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+            </div>
+            {% elif cal_rate <= 5.0 %}
+            <div class="text-danger mb-1 me-2">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            {% else %}
+            <div class="text-danger mb-1 me-2">
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+              <i class="far fa-star"></i>
+            </div>
+            {% endif %}
+
+            <span>{{ratings.count}}</span>
+          </div>
+          <div class="card-body">
+            <p class="card-text">
+              Service : {{ company.service }} <br />
+              Location : {{ company.location }} <br />
+            </p>
+          </div>
+
+          <div>
+            <!-- Facebook -->
+            <a
+              class="btn btn-primary"
+              style="background-color: #3b5998"
+              href="#!"
+              role="button"
+            >
+              <i class="fab fa-facebook-f"></i>
+            </a>
+
+            <!-- Twitter -->
+            <a
+              class="btn btn-primary"
+              style="background-color: #55acee"
+              href="#!"
+              role="button"
+            >
+              <i class="fab fa-twitter"></i>
+            </a>
+
+            <!-- Instagram -->
+            <a
+              class="btn btn-primary"
+              style="background-color: #ac2bac"
+              href="#!"
+              role="button"
+            >
+              <i class="fab fa-instagram"></i>
+            </a>
+
+            <!-- Linkedin -->
+            <a
+              class="btn btn-primary"
+              style="background-color: #0082ca"
+              href="#!"
+              role="button"
+            >
+              <i class="fab fa-linkedin-in"></i>
+            </a>
+
+            <!-- Whatsapp -->
+            <a
+              class="btn btn-primary"
+              style="background-color: #25d366"
+              href="https://api.whatsapp.com/send?phone={{company.user.phone_number}}"
+              role="button"
+            >
+              <i class="fab fa-whatsapp"></i>
+            </a>
+
+            <!-- Call -->
+            <a
+              class="btn btn-primary"
+              style="background-color: purple"
+              href="tel:{{company.user.phone_number}}"
+              role="button"
+            >
+              <i class="fas fa-phone"></i>
+            </a>
+          </div>
+
+          <!--Reviews-->
+
+          <div>
+            <br />
+            <h5>Review</h5>
+
+            <form action="" method="post">
+              {% csrf_token %}
+              <input type="hidden" value="{{company.id}}" />
+              <div class="row">
+                <div class="col-3" style="padding: 30px">Rating</div>
+                <div class="col-9">
+                  <div class="form-group">
+                    <label name="rate" for="exampleFormControlSelect1"></label>
+                    <select
+                      name="rate"
+                      class="form-control"
+                      id="exampleFormControlSelect1"
+                    >
+                      <label for="rate">Rating</label>
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div style="padding-left: 25px; padding-bottom: 20px">
+                <div class="form-outline">
+                  <input
+                    type="text"
+                    id="form3Example3"
+                    name="comment"
+                    class="form-control"
+                    required
+                  />
+                  <label class="form-label" for="form3Example3">Comment</label>
+                </div>
+              </div>
+
+              <div style="padding-left: 25px; text-align: right">
+                <button type="submit" class="btn btn-primary btn-sm">
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div>
+            <br />
+            <h5>Reviews</h5>
+
+            <div class="row">
+              {% if ratings %} {% for rating in ratings %}
+              <div class="col">
+                <div class="card" style="width: 18rem">
+                  <div class="card-body">
+                    <div>
+                      <div class="row">
+                        <div class="col-12">
+                          <h6 class="card-subtitle mb-2 text-muted">
+                            {{rating.user.user_name}}
+                          </h6>
+                        </div>
+                        <div class="col-12">
+                          <div
+                            class="d-flex flex-row"
+                            style="padding-left: 5px"
+                          >
+                            {% if rating.rating == 0.0 %}
+                            <div class="text-danger mb-1 me-2">
+                              <i class="far fa-star"></i>
+                              <i class="far fa-star"></i>
+                              <i class="far fa-star"></i>
+                              <i class="far fa-star"></i>
+                              <i class="far fa-star"></i>
+                            </div>
+                            {% elif rating.rating <= 1.0 %}
+                            <div class="text-danger mb-1 me-2">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="far fa-star"></i>
+                              <i class="far fa-star"></i>
+                              <i class="far fa-star"></i>
+                            </div>
+                            {% elif rating.rating <= 3.0 %}
+                            <div class="text-danger mb-1 me-2">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="far fa-star"></i>
+                              <i class="far fa-star"></i>
+                            </div>
+                            {% elif rating.rating <= 4.0 %}
+                            <div class="text-danger mb-1 me-2">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="far fa-star"></i>
+                            </div>
+                            {% elif rating.rating <= 5.0 %}
+                            <div class="text-danger mb-1 me-2">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                            </div>
+                            {% else %}
+                            <div class="text-danger mb-1 me-2">
+                              <i class="far fa-star"></i>
+                              <i class="far fa-star"></i>
+                              <i class="far fa-star"></i>
+                              <i class="far fa-star"></i>
+                              <i class="far fa-star"></i>
+                            </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="card-text">{{rating.comment}}</p>
+                  </div>
+                </div>
+              </div>
+              {% endfor %} {% else %}
+              <div class="col-12">
+                <h6>No Reviews</h6>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}
+</body>

@@ -146,3 +146,5 @@ class Company(models.Model):
     name = models.CharField(max_length=100,null=True,blank=True)
     avatar = models.ImageField(upload_to='avatars/', default='avatars/default.jpg')
 
+    rating = models.IntegerField(default=0)
+
