@@ -1,10 +1,31 @@
 {% extends "layouts/base.html" %}
+{% load static %}
 {% block content %}
   <body>
+
+    <!--Barner and Logo image display-->
+    
+
+
     <!-- Start your project here-->
     <div class="container">
       <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
         <div class="text-center">
+          <div class="text-center">
+            <div>
+              <h4>Jua Kali B2C</h4>
+              <br><br>
+            </div>
+          </div>
+
+          <!--Error messages from backend-->
+          {% if messages %} {% for message in messages %}
+      <!--Toggle allert message and dismis in seconds-->
+      <div class="alert alert-info alert-dismissible fade show" role="alert">
+        {{message.message}}
+      </div>
+      {% endfor %} {% endif %}
+
           <form method="post">
             {% csrf_token %}
             <!-- Email input -->
@@ -37,6 +58,12 @@
           
             <!-- Submit button -->
             <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+            <br><br>
+            <div class="col">
+              <!-- Simple link -->
+              You do not have an account? 
+              <a href="{% url 'users:register' %}">Sign Up</a>
+            </div>
           </form>
         </div>
       </div>

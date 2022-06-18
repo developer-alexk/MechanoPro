@@ -1,0 +1,43 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block content %}
+  <body>
+
+    <!--Barner and Logo image display-->
+    
+
+
+    <!-- Start your project here-->
+    <div class="container">
+      <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
+        <div class="text-center">
+          <div class="text-center">
+            <div>
+              <h4>🥰 Smash Me 🥰</h4>
+
+              <h4>Enter the OTP sent to your phone number.</h4>
+              <br><br>
+            </div>
+          </div>
+
+          <form method="post">
+            {% csrf_token %}
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+              <input type="number" id="form1Example1" name="otp" class="form-control" />
+              <label class="form-label" for="form1Example1">OTP</label>
+            </div>
+          
+            
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+            
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- End your project here-->
+
+{% endblock %}
+
+    

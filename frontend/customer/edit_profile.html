@@ -1,0 +1,51 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+
+<body>
+    {% include 'layouts/navbar.html' %}
+    <div class="container">
+        <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
+            <div class="text-center">
+
+                <!--Error messages from backend-->
+                {% if messages %} {% for message in messages %}
+                <!--Toggle allert message and dismis in seconds-->
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    {{message.message}}
+                </div>
+                {% endfor %} {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+                    <!-- 2 column grid layout with text inputs for the first and last names -->
+                    
+
+                    <div class="mb-3">
+                        <label for="formFile" class="form-label">Enter Profile Picture</label>
+                        <input value="{{user.avatar}}"  enctype='multipart/form-data' class="form-control" name="avatar" type="file"
+                            id="formFile" >
+                    </div>
+
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <input type="text" id="form3Example3" name="phone" class="form-control" />
+                        <label value="{{user.phone_number}}" class="form-label" for="form3Example3">Whatsapp Phone Number</label>
+                    </div>
+
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                        <input value="{{user.email}}" type="email" id="form3Example4" name="email" class="form-control"/>
+                        <label class="form-label" for="form3Example4">Email</label>
+                    </div>
+
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Update</button>
+
+                    
+            </div>
+        </div>
+    </div>
+    </form>
+
+    {% endblock %}

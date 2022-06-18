@@ -1,0 +1,85 @@
+{% extends "layouts/base.html" %}
+{% block content %}
+
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-center align-items-center" style="height: 100vh">
+            <div class="text-center">
+
+                <div class="text-center">
+                    <div>
+                        <h4>Jua Kali B2C</h4>
+                        <br><br>
+                    </div>
+                </div>
+
+                <div class="mdb-4">
+                    <h5>More Information</h5>
+                </div>
+
+                <!--Error messages from backend-->
+                {% if messages %} {% for message in messages %}
+                <!--Toggle allert message and dismis in seconds-->
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    {{message.message}}
+                </div>
+                {% endfor %} {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+                    <!-- 2 column grid layout with text inputs for the first and last names -->
+                    
+
+                    
+                    <!-- Email input -->
+                    <div class="form-group">
+                        <label name="service" for="exampleFormControlSelect1"></label>
+                        <select name="service" class="form-control" id="exampleFormControlSelect1">
+                            <label for="service">Category</label>
+                            <option>Software</option>
+                            <option>Electronics</option>
+                            <option>Car Wash</option>
+                            <option>Public Toilet</option>
+                        </select>
+                    </div>
+
+                    <br>
+
+                    <div class="form-outline mb-4">
+                        <input type="text" id="form3Example4" name="name" class="form-control" required/>
+                        <label class="form-label"  for="form3Example4">Business Name</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        <input type="text" id="form3Example4" name="location" class="form-control" required/>
+                        <label class="form-label" for="form3Example4">Location</label>
+                    </div>
+
+                    <!-- Password input -->
+                    <div class="form-outline mb-4">
+                        <input type="text" id="form3Example4" name="bio" class="form-control" required/>
+                        <label class="form-label" for="form3Example4">Bio</label>
+                    </div>
+
+                    <div >
+                        <p2>Profile Picture for Profession</p2>
+                    </div>
+
+                    <!-- Email input -->
+                    <div class="form-outline mb-4">
+                        <input type="file" id="form3Example3" name="avatar" class="form-control" placeholder="Image" required />
+                        <label class="form-label" for="form3Example3"></label>
+                    </div>
+
+                    
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary btn-block mb-4">Submit</button>
+
+                    
+            </div>
+        </div>
+    </div>
+    </form>
+
+    {% endblock %}
