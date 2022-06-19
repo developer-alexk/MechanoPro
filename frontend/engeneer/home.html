@@ -1,41 +1,116 @@
 {% extends "layouts/base.html" %} {% load static %} {% block content %}
 <body>
-  {% include 'layouts/navbar.html' %}
-  <div class="container">
-    <div class="grid" style="row-gap: 0;">
-        <div class="g-col-6">g-col-6</div>
-        <div class="g-col-6">g-col-6</div>
-      
-        <div class="g-col-6">g-col-6</div>
-        <div class="g-col-6">g-col-6</div>
-      </div>
-
-  </div>
-
-
-  <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Launch demo modal
-  </button>
+ 
   
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+  <div >
+    <section >
+        
+      <div class="">
+        {% include 'layouts/navbar.html' %}
+        <div class="card-body rounded-bottom text-dark" style="background-color: #fafafa;">
+          <div class="row">
+            <div class="col-6 p-1">
+              <div class="card" style="background-color: #e0e0e0;">
+                <div class="card-body pb-0">
+                  <i class="fas fa-tint fa-3x pb-4" style="text-align: center;"></i>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-0 hour">Rate By 2 People</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="card-body pt-0">
+                  <h6 class="font-weight-bold mb-1">Company</h6>
+                  <p class="mb-0"></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 p-1">
+              <div class="card" style="background-color: #ffcc80;">
+                <div class="card-body pb-0">
+                  <i class="fas fa-sun fa-3x pb-4"></i>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-0 hour">Updated  2</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="card-body pt-0">
+                  <h6 class="font-weight-bold mb-1">Social Media</h6>
+                  <p class="mb-0"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 p-1">
+              <div class="card" style="background-color: #9fa8da;">
+                <div class="card-body pb-0">
+                  <i class="fas fa-tint fa-3x pb-4"></i>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-0 h5"></p>
+                    <p class="mb-0 hour">New</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="card-body pt-0">
+                  <h6 class="font-weight-bold mb-1">Terms & Conditions</h6>
+                  <p class="mb-0"></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 p-1">
+              <div class="card" style="background-color: #e0e0e0;">
+                <div class="card-body pb-0">
+                  <i class="fas fa-cloud fa-3x pb-4"></i>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-0 h5"></p>
+                    <p class="mb-0 hour">13 Contacts</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="card-body pt-0">
+                  <h6 class="font-weight-bold mb-1">Contacts</h6>
+                  <p class="mb-0"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-6 p-1">
+              <div class="card" style="background-color: #ffcc80;">
+                <div class="card-body pb-0">
+                  <i class="fas fa-sun fa-3x pb-4"></i>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-0 h5"></p>
+                    <p class="mb-0 hour">13 tags</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="card-body pt-0">
+                  <h6 class="font-weight-bold mb-1">Tags</h6>
+                  <p class="mb-0"></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-6 p-1">
+              <div class="card indigo text-white" style="background-color: #3f51b5;">
+                <div class="card-body pb-0">
+                  <i class="fas fa-umbrella fa-3x pb-4"></i>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-0 h5"></p>
+                    <p class="mb-0 hour">Updated</p>
+                  </div>
+                </div>
+                <hr class="hr-light">
+                <div class="card-body pt-0">
+                  <h6 class="font-weight-bold mb-1">Profile</h6>
+                  <p class="mb-0"></p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+      
+    </section>
   </div>
   {% endblock %}
