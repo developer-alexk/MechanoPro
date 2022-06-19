@@ -3,8 +3,6 @@ from distutils.ccompiler import gen_lib_options
 import email
 from unicodedata import category
 from django.shortcuts import redirect, render
-from grpc import services
-from psutil import users
 from pytz import utc
 from config.sms import send_otp_to_validate_phone
 from likes.models import Likes
