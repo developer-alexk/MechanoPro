@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'likes',
     'corsheaders',
     'rest_framework.authtoken',
-    'django_filters',
 ]
 
 MIDDLEWARE = [
