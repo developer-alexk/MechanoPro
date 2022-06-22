@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'otp',
+    'orders',
     'ratings',
     'rest_framework',
     'likes',

@@ -1,97 +1,41 @@
 {% extends "layouts/base.html" %} {% load static %} {% block content %}
 <body>
   {% include 'layouts/navbar.html' %}
-  <div class="container">
-    <div class="row">
-      {% for engeneer in engeneers %}
-     <a href="{% url 'users:company_details' engeneer.id %}">
-      <div class="col-md-3" style="padding: 15px;" >
-        
-        <div class="card" style="width: 18rem">
-          <img
-            src="https://mdbcdn.b-cdn.net/img/new/standard/nature/182.webp"
-            class="card-img-top"
-            alt="Sunset Over the Sea"
-          />
-          <div class="d-flex flex-row" style="padding-left: 5px;">
-            <p>
-              <b>{{ engeneer.name }}</b>
-            </p>
-          </div>
-          <div class="d-flex flex-row" style="padding-left: 5px;">
-            {% if engeneer.rating == 0.0 %}
-                            <div class="text-danger mb-1 me-2">
-                              <i class="far fa-star"></i>
-                              <i class="far fa-star"></i>
-                              <i class="far fa-star"></i>
-                              <i class="far fa-star"></i>
-                              <i class="far fa-star"></i>
-                            </div>
-            {% elif engeneer.rating <= 1.0 %}
-                            <div class="text-danger mb-1 me-2">
-                              <i class="fas fa-star"></i>
-                              <i class="far fa-star"></i>
-                              <i class="far fa-star"></i>
-                              <i class="far fa-star"></i>
-                              <i class="far fa-star"></i>
-                            </div>
-                            {% elif engeneer.rating <= 2.0 %}
-                            <div class="text-danger mb-1 me-2">
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="far fa-star"></i>
-                              <i class="far fa-star"></i>
-                              <i class="far fa-star"></i>
-                            </div>
-                            {% elif engeneer.rating <= 3.0 %}
-                            <div class="text-danger mb-1 me-2">
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="far fa-star"></i>
-                              <i class="far fa-star"></i>
-                            </div>
-                            {% elif engeneer.rating <= 4.0 %}
-                            <div class="text-danger mb-1 me-2">
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="far fa-star"></i>
-                            </div>
-                            {% elif engeneer.rating <= 5.0 %}
-                            <div class="text-danger mb-1 me-2">
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                              <i class="fas fa-star"></i>
-                            </div>
-                            {% else %}
-                            <div class="text-danger mb-1 me-2">
-                              <i class="far fa-star"></i>
-                              <i class="far fa-star"></i>
-                              <i class="far fa-star"></i>
-                              <i class="far fa-star"></i>
-                              <i class="far fa-star"></i>
-                            </div>
-                            {% endif %}
-            <span>{{ engeneer.rating }}</span>
-          </div>
-          <div class="card-body">
-            <p class="card-text">
-              Service : {{ engeneer.service }} <br>
-              Location : {{ engeneer.location }} <br>
-            </p>
-          </div>
-        </div>
-        
-        </div>
-     </a>
-      
-      {% endfor %}
-    </div>
-  </div>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for engeneer in engeneers %}
+    <div class="col">
+      <div class="card h-100">
+        <img src="https://mdbcdn.b-cdn.net/img/new/standard/city/044.webp" class="card-img-top" alt="Skyscrapers"/>
+        <div class="card-body">
+          <h5 class="card-title">{{engeneer.user_name}}</h5>
+          <p class="card-text">
 
+            Services : {{engeneer.services}} <br>
+
+            Location : {{engeneer.location}} <br>
+
+            Description: {{engeneer.description}}.
+          </p>
+        </div>
+        <div class="card-footer">
+          <div class="text-danger mb-1 me-2">
+            <i class="fas fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+          </div>
+          <small class="text-muted">Last updated 3 mins ago</small>
+
+          <a href="{% url 'users:company_details' engeneer.id %}">
+            More
+            </a>
+
+          
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
   {% endblock %}
 </body>

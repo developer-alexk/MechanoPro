@@ -28,7 +28,18 @@
 
         <form method="post">
           {% csrf_token %}
-          <p>Please register to your account</p>
+          <p>Please register to your account as engineer.</p>
+
+          <div class="form-label mb-4">
+            <label name="services" for="exampleFormControlSelect1"></label>
+            <select name="services" class="form-control" id="exampleFormControlSelect1" required>
+                <option>All Services</option>
+                <option>Body Wash and Wheel Alignment </option>
+                <option>Full Service</option>
+                <option>Painting</option> 
+                <option></option>
+            </select>
+        </div>
 
           <div class="form-outline mb-4">
             <input
@@ -58,6 +69,22 @@
             >
           </div>
 
+
+          <div class="form-outline mb-4">
+            <input
+              type="text"
+              id="form2Example11"
+              class="form-control"
+              name="description"
+              placeholder="Description"
+              required
+            />
+            <label class="form-label" for="form2Example11"
+              >Description</label
+            >
+          </div>
+          
+
           <div class="form-outline mb-4">
             <input
               type="text"
@@ -65,6 +92,8 @@
               class="form-control"
               name="phone"
               placeholder="Phone number "
+
+
               required
             />
             <label class="form-label" for="form2Example11"
@@ -97,8 +126,8 @@
           <div
             class="d-flex align-items-center justify-content-center pb-4"
           >
-          <a href="{% url 'users:register_as_engineer' %}">
-            <p class="mb-0 me-2">Register as an engineer.</p>
+          <a href="{% url 'users:register' %}">
+            <p class="mb-0 me-2">Register as a customer.</p>
           </a>
           </div>
 

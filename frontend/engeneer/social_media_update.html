@@ -1,0 +1,81 @@
+{% extends "layouts/base.html" %} {% load static %} {% block content %}
+<body>
+ 
+  
+  <div >
+    <section >
+        
+      <div class="">
+        {% include 'layouts/navbar.html' %}
+
+        <div class="conatiner" style="padding: 20; text-align: center;">
+            <h4>Social Media Update</h4>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="form-outline" style="padding: 20;">
+                    <input
+                      class="form-control"
+                      id="formControlReadonly"
+                      type="text"
+                      value="{{social_media.facebook}}"
+                      name="facebook"
+                    />
+                    <label class="form-label" for="formControlReadonly">Facebook</label>
+                  </div>
+                  <br>
+                  <div class="form-outline">
+                    <input
+                      class="form-control"
+                      id="formControlReadonly"
+                      type="text"
+                      value="{{social_media.twitter}}"
+                        name="twitter"
+                    />
+                    <label class="form-label" for="formControlReadonly">Twitter</label>
+                  </div>
+
+                  <br>
+
+                  <div class="form-outline">
+                    <input
+                      class="form-control"
+                      id="formControlReadonly"
+                      type="text"
+                      value="{{social_media.instagram}}"
+                        name="instagram"
+                    />
+                    <label class="form-label" for="formControlReadonly">Instagram</label>
+                  </div>
+
+                  <br>
+
+                  <div class="form-outline">
+                    <input
+                      class="form-control"
+                      id="formControlReadonly"
+                      type="text"
+                      value="{{social_media.linkedin}}"
+                        name="linkedin"
+
+                    />
+                    <label class="form-label" for="formControlReadonly">Linkedin</label>
+                  </div>
+
+                  <br>
+                  <br>
+
+                  <!--Submit MDB Button-->
+                  <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+
+            {% for social_media in social_media %}
+
+            {{social_media.facebook}}
+
+            {% endfor %}
+        </div>
+      </div>
+      
+    </section>
+  </div>
+  {% endblock %}

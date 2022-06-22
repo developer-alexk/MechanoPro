@@ -112,6 +112,8 @@ class Account(AbstractBaseUser, PermissionsMixin):
     email = models.CharField(max_length=100,null=True,blank=True)
     location = models.CharField(max_length=100,null=True,blank=True)
     role = models.CharField(max_length=100,null=True,blank=True)
+    services = models.CharField(max_length=100,null=True,blank=True)
+    description = models.CharField(max_length=100,null=True,blank=True)
     is_staff = models.BooleanField(default=False)
     is_activated = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
@@ -135,10 +137,18 @@ class Account(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.user_name
 
+class SocialMedia(models.Model):
+    user = models.ForeignKey(Account,on_delete=models.CASCADE,related_name="added_by")
+    facebook = models.CharField(max_length=100,null=True,blank=True)
+    twitter = models.CharField(max_length=100,null=True,blank=True)
+    instagram = models.CharField(max_length=100,null=True,blank=True)
+    linkedin = models.CharField(max_length=100,null=True,blank=True)
+
+
 
 class Company(models.Model):
     bio = models.TextField(null=True,blank=True)
-    user = models.ForeignKey(Account,on_delete=models.CASCADE,related_name="added_by")
+    user = models.ForeignKey(Account,on_delete=models.CASCADE,related_name="social_added_by")
     service = models.CharField(max_length=100,null=True,blank=True)
     location = models.CharField(max_length=100,null=True,blank=True)
     name = models.CharField(max_length=100,null=True,blank=True)

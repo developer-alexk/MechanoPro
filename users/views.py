@@ -6,12 +6,13 @@ from django.shortcuts import redirect, render
 from pytz import utc
 from config.sms import send_otp_to_validate_phone
 from likes.models import Likes
+from orders.models import Order
 from otp.models import Otps
 from otp.views import random_number_generator
 from ratings.models import Rattings, calculate_rating
 from users.forms import UserUpdateForm
 
-from users.models import Account, Company
+from .models import Account, Company, SocialMedia
 
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
@@ -30,6 +31,38 @@ def logout_view(request):
 @login_required
 def profile(request):
     return render(request, 'customer/profile.html')
+
+def social_media_update(request):
+    if request.method == "POST":
+        facebook = request.POST.get('facebook')
+        twitter = request.POST.get('twitter')
+        instagram = request.POST.get('instagram')
+        linkedin = request.POST.get('linkedin')
+        user_id = request.user.id
+
+        #check if user has already added social media Update else create new 
+        # if SocialMedia.objects.filter(id=user_id).exists():
+        #     SocialMedia.objects.filter(id=user_id).update(facebook=facebook,twitter=twitter,instagram=instagram,linkedin=linkedin)
+        #     print("Update")
+        # else:
+        social = SocialMedia(
+                user_id = user_id,
+                facebook= facebook,
+                twitter = twitter,
+                instagram = instagram,
+                linkedin = linkedin
+            )
+        social.save()
+        print("Saved")
+        return redirect('users:profile')
+    #filter Social Media by user id
+    social_media = SocialMedia.objects.filter(id=request.user.id).first()
+    
+
+    data = {
+        "social_media" : social_media
+    }
+    return render(request,'engeneer/social_media_update.html',data)
 
 def index(request):
     username = password = ''
@@ -85,12 +118,9 @@ def index(request):
 
 @login_required
 def customer_home(request):
-    campanies = Company.objects.all()
+    campanies = Account.objects.all()
     
-
-
-    
-    engeneers = Company.objects.all().order_by('-id')
+    engeneers = Account.objects.filter(role="Engeneer").order_by('-id')
     data = {
         "engeneers" : engeneers,
     }
@@ -98,60 +128,21 @@ def customer_home(request):
     return render(request, 'customer/home.html',data)
 
 def company_details(request,company_id):
+    user = Account.objects.get(id=request.user.id)
+    company = Account.objects.get(id=company_id)
+    from orders.models import Order
     if request.method == "POST":
-        rating = request.POST.get('rate')
-        comment = request.POST.get('comment')
-        print(rating)
-        print(comment)
-        user = Account.objects.get(id=request.user.id)
-        company = Company.objects.get(id=company_id)
-
-        #Check if user has already rated the company and decline the request if they have
-        if Rattings.objects.filter(user=user,company=company):
-            cal_rate = calculate_rating(company_id=company_id)
-            Company.objects.filter(id=company_id).update(rating=cal_rate)
-            print("Already Rated")
-            messages.error(request, 'You have already rated this company')
-            return redirect('users:company_details',company_id=company_id)
-
-        try:
-            Rattings(
-            rating = rating,
-            comment = comment,
-            user = user,
-            company = company
-            ).save()
-            print("Saved")
-
-            messages.error(request, 'Thanks For Rating Us')
-
-            cal_rate = calculate_rating(company_id=company_id)
-            Company.objects.filter(id=company_id).update(rating=cal_rate)
-
-
-        except:
-            cal_rate = calculate_rating(company_id=company_id)
-            Company.objects.filter(id=company_id).update(rating=cal_rate)
-            print("Failed")
-
-
-    company = Company.objects.get(id=company_id)
-    ratings = Rattings.objects.all().filter(company=company)
-
-
-
-    #Print number of ratings
-    print(len(ratings))
-
-    #Calculate average rating
-    cal_rate = calculate_rating(company_id=company_id)
-    print("Rating", cal_rate)
-
+        order = Order(
+        user = Account.objects.get(id=request.user.id),
+        company = Account.objects.get(id=company_id)
+        )
+        order.save()
+        print("Orders")
     data = {
         "company" : company,
-        "ratings" : ratings,
-        "cal_rate" : cal_rate
     }
+    print("Sca")
+    
     return render(request,'customer/company_details.html',data)
 
 @login_required
@@ -180,10 +171,12 @@ def admin_home(request):
 def register(request):
     data = {}
     if request.method == "POST":
-        username = request.POST.get('username')
+        username = request.POST.get('user_name')
         phone = request.POST.get('phone')
         pin = request.POST.get('password')
-        role = request.POST.get('role')
+        role = "Customer"
+        city = request.POST.get('city')
+        print(city)
         print(role)
         print(username)
         print(phone)
@@ -219,62 +212,67 @@ def register(request):
 
         user = authenticate(request,username=phone,password=pin)
         login(request,parent)
-
-        if request.user.role == "Customer":
-            Account.objects.filter(id=request.user.id).update(is_activated=True)
-            return redirect('users:customer_home')
-
-        if request.user.role == "Engeneer":
-            return redirect('users:engeneer_infor')
-            # return redirect('users:engeneer_home')
-
-        
-
-    #     phonenumber = phone
-    #     otp_number = random_number_generator(size=4)
-    #     try:
-    #         #Check number if it exist
-    #         check_number_if_otp_exists = Otps.objects.filter(phone_number=phone)
-    #     except:
-    #         check_number_if_otp_exists = {}
-            
-    #     if bool(check_number_if_otp_exists) == False:
-    #         otp = Otps(
-    #                 phone_number = phone,
-    #                 otp = otp_number
-    #         )
-    #         print(otp_number)
-    #         send_otp_to_validate_phone(
-    #             phone=phone,
-    #             otp=otp_number
-    #         )
-    #         otp.save()
-    #         print("OTP Saved Sucessfull")
-
-    #             # add otp id to the user model to authenticate before login
-    #         try:
-    #             Account.objects.filter(phone_number=phone).update(
-    #                     otp=Otps.objects.filter(otp=otp_number))
-    #         except:
-    #             print("none")
-
-    #     elif bool(check_number_if_otp_exists) == True:
-    #         new_otp = Otps.objects.filter(phone_number=phone).update(otp=otp_number)
-    #         print(otp)
-    #         print("OTP updated")
-    #         send_otp_to_validate_phone(
-    #             phone=phone,
-    #             otp=otp_number
-    #         )
-    #         messages.info(request, f"OTP has been sent to your phone number")
-
-    #     return redirect('otp/?phone='+phone)
-
-    # # except:
-    # #     return redirect('users:ptc-register')
-    # print("Done")
+        Account.objects.filter(id=request.user.id).update(is_activated=True)
+        return redirect('users:customer_home')
 
     return render(request,'customer/register.html',data)
+
+def register_as_engineer(request):
+    data = {}
+    if request.method == "POST":
+        username = request.POST.get('user_name')
+        phone = request.POST.get('phone')
+        pin = request.POST.get('password')
+        role = "Engeneer"
+        city = request.POST.get('city')
+        description = request.POST.get('description')
+        services = request.POST.get('services')
+        print(description)
+        print(services)
+        print(city)
+        print(role)
+        print(username)
+        print(phone)
+
+        #if phone number starts with 07 remove the 0 and add +254
+        if phone[0] == '0':
+            phone = phone[1:]
+            phone = '+254'+phone
+        
+        #if phone number does not start with + append + 
+        elif phone[0] != '+':
+            phone = '+'+phone
+
+        #check if the phone number is already registered
+        if Account.objects.filter(phone_number=phone).exists():
+            print("phone number already registered")
+            messages.info(request, f"Phone number already registered")
+            return redirect('users:register')
+        #     create a custom user with the phone number as the username and email backend as the password
+        parent = Account(
+            phone_number = phone,
+            user_name = username,
+            password=make_password(pin),
+            description = description,
+            location = city,
+            services = services,
+            role = role,
+        )
+        
+        parent.save()
+        
+        messages.info(request, f"You are now registered as {username}")
+
+        authenticate(request,username=phone,password=pin)
+
+        login(request,parent)
+
+        Account.objects.filter(id=request.user.id).update(is_activated=True)
+        return redirect('users:engeneer_home')
+
+    return render(request,'engeneer/register.html')
+        
+
 
 def engeneer_infor(request):
     if request.method == "POST":
